@@ -1,7 +1,8 @@
-var slider1, slider2, hslider, bslider;
+var slider1, slider2, hslider, bslider, rsli, gsli, bsli;
 var w = 50;
 var y1 = 280;
 var hs, bs = 20;
+var rsl, gsl, bsl;
 //var w = slider.value;
 //	slider.oninput = function() {
 //	w = this.value;
@@ -15,6 +16,9 @@ function setup() {
 	slider2 = createSlider(100, 300, 280);
 	hslider = createSlider(1, 100, 20);
 	bslider = createSlider(10, 100, 20);
+	bsli = createSlider(0, 255, 20);
+	gsli = createSlider(0, 255, 20);
+	rsli = createSlider(0, 255, 20);
 }
 
 function updateSize() {
@@ -22,6 +26,9 @@ function updateSize() {
 	y1 = slider2.value()
 	hs = hslider.value()
 	bs = bslider.value()
+	rsl = rsli.value()
+	bsl = bsli.value()
+	gsl = gsli.value()
 }
 
 function draw() {
@@ -30,9 +37,12 @@ function draw() {
 	slider2.input(updateSize);
 	hslider.input(updateSize);
 	bslider.input(updateSize);
+	bsli.input(updateSize);
+	gsli.input(updateSize);
+	rsli.input(updateSize);
 	for (var x =  -200; x <width + 200; x += w) {
 		for (var y =  -200; y <height + 200; y += y1) {
-			One(x, y, color(255, 204, 0), hs, bs)
+			One(x, y, color(rsl, gsl, bsl), hs, bs)
 		}
 	}
 	
@@ -44,7 +54,7 @@ function draw() {
 
 function One(x, y, c, h, b) {
 	for (var a = 0; a < b; a += 1.3) {
-		r = random(0, h)
+		r = random(0, h/2)
 	    stroke(c)
 	    line(x + a, y+r, x + a, y +h + r)
 	}
