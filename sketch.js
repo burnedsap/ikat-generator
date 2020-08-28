@@ -2,6 +2,7 @@ var slider1, slider2, hslider, bslider, rsli, gsli, bsli, brsli, bgsli, bbsli;
 let sel;
 let item;
 var stag;
+let saveB;
 
 function setup() {
     createCanvas(800, 600);
@@ -24,6 +25,8 @@ function setup() {
     brsli = createSlider(0, 255, 0);
     bgsli = createSlider(0, 255, 0);
     bbsli = createSlider(0, 255, 80);
+    saveB = createButton('save image');
+    saveB.mousePressed(saveImage);
 }
 
 function draw() {
@@ -118,6 +121,9 @@ function Four(x, y, c, h) {
 //        line(x + 80, 54+y + r, x + 80+h, 60+y + r)
         line(x + 90, 20+y + r, x + 90, y+54 + r+h) //long line
 
-       
     }
+}
+
+function saveImage() {
+    save('ikat-generator.png');
 }
