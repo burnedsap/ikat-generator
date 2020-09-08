@@ -1,9 +1,12 @@
+p5.disableFriendlyErrors = true; // disables FES
+let stag;
+let saveB;
 var bs = 10;
 var offset = 70;
-var slider1, slider2, slider3;
+var sliderx, slidery, thickslider, rslider, rsli, gsli, bsli, brsli, bgsli, bbsli;
 let arr = [];
 function setup() {
-	canvas = createCanvas(900, 600);
+	canvas = createCanvas(900, 600, P2D);
 	for (var j = 0; j < 20; j++) {
 		var inArr = [];
 		for (var i = 0 + offset; i < 20 + offset; i++) {
@@ -14,21 +17,39 @@ function setup() {
 		arr.push(inArr)
 	}
 	
-	background(240);
-	slider1 = createSlider(25, 150, 60);
-	slider2 = createSlider(1, 10, 1);
+	sliderx = createSlider(35, 150, 60);
+	slidery = createSlider(35, 150, 60);
+	thickslider = createSlider(1, 10, 1);
+	rslider = createSlider(0, 10, 1);
+	bsli = createSlider(0, 255, 120);
+    gsli = createSlider(0, 255, 120);
+    rsli = createSlider(0, 255, 120);
+    brsli = createSlider(0, 255, 0);
+    bgsli = createSlider(0, 255, 0);
+    bbsli = createSlider(0, 255, 80);
+	saveB = createButton('save image');
+    saveB.mousePressed(saveImage);
+
 }
 
-function orico(spacing, thick) {
+function orico(spacingx, spacingy, thick, r, pr, pg, pb) {
+	stroke(pr, pg,pb);
 	strokeWeight(thick);
-	for (var x =  -100; x < width - 300; x += spacing) {
-		for (var y = 0; y < height; y += spacing) {
+	for (var x =  -100; x < width - 300; x += spacingx) {
+		for (var y = 0; y < height; y += spacingy) {
+			if (y % 2 == 0) {
+                stag = spacingx / 2;
+                //				console.log('50');
+            } else {
+                stag = 0;
+                //				console.log('0');
+            }
 			push();
-			translate(x, y);
+			translate(x+stag, y);
 			for (var i = 0; i < arr.length; i++) {
 				for (var j = 0; j < arr[i].length; j++) {
 					if (arr[i][j].fill == 'black') {
-						point(arr[i][j].i, arr[i][j].j);
+						point(arr[i][j].i, arr[i][j].j+random(r));
 					}
 				}
 			}
@@ -39,14 +60,24 @@ function orico(spacing, thick) {
 }
 
 function draw() {
-	background(240);
+	background(255);
+	noStroke();
+	fill(150);
+	rect(0, 0, width-200, height);
 	for (var i = 0; i < arr.length; i++) {
 		for (var j = 0; j < arr[i].length; j++) {
 			arr[i][j].show()
 		}
 	}
 	
-	orico(slider1.value(), slider2.value());
+	orico(sliderx.value(), slidery.value(), thickslider.value(), rslider.value(), rsli.value(), gsli.value(), bsli.value());
+	
+	for (n = 0; n < width-200; n += 1.5) {
+		strokeWeight(0.09);
+        stroke(brsli.value(), bgsli.value(), bbsli.value(), 100)
+        line(width-200, 0 + n, 0, 0 + n)
+    }
+	
 	if (mouseIsPressed) {
 		arr.forEach(function(e, index) {
 			e.forEach(function(d, index2) {
@@ -69,62 +100,17 @@ function Rect(i, j) {
 			y1 = this.y,
 			y2 = y1 + 20;
 		if ((mouseX >x1 &&mouseX < x2) && (mouseY >y1 &&mouseY < y2)) {
-			//      console.log(this)
-			      this.fill = 'black'
+			this.fill = 'black'
 		}
 	}
 	
 	this.show = function () {
-		fill(this.fill)
-		//		stroke('blue')
-			    rect(this.x, this.y, bs, bs);
+		stroke(0);
+		fill(this.fill);
+		strokeWeight(0.2);
+		rect(this.x, this.y, bs, bs);
 	}
 }
-
-//var res = 10;
-//var grid = [];
-//function setup() {
-//	createCanvas(300, 300);
-//	background(245);
-//	frameRate(12);
-//    //	frameRate(15)
-//	for (var x = 0; x < width; x += res) {
-//		for (var y = 0; y < width; y += res) {
-//			var index = x+y*width;
-//			grid[index] = random(255);
-//		}
-//	}
-//	console.log(grid);
-//}
-//
-//function draw() {
-//	fill(255);
-//	stroke(51);
-//	
-//	for (var x = 0; x < width; x += res) {
-//		for (var y = 0; y < width; y += res) {
-//			var index = x+y*width;
-//			fill(grid[index]);
-//			console.log(grid[index]);
-//			rect(x, y, res, res);
-//		}
-//	}
-//	if(mouseIsPressed) {
-//		for (var x = 0; x < width; x += res) {
-//		for (var y = 0; y < width; y += res) {
-//			var index = x+y*width;
-//			var check = mouseX+mouseY*width;
-//			console.log(grid[index]);
-//
-//		}
-//	}
-//		console.log(mouseX, mouseY);
-//		var check = mouseX+mouseY*width;
-//		console.log(check);
-//		console.log(grid[check]);
-//		}
-//		
-//}
-//   
-//   
-
+function saveImage() {
+    save('ikat-generator.png');
+}
