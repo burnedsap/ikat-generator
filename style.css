@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900');
+
+html {
+	/*font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+	font-family: Inter;
+}
+
+:root {
+	--mw: 45rem;
+}
+
+.main-container {
+	max-width: var(--mw);
+	padding-left: 1rem;
+	padding-right: 1rem;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 2rem;
+	margin-bottom: 5rem;
+}
+
+.about {
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+}
+
+a {
+	color: black;
+}
+
+a:hover {
+	color: white;
+	background: black;
+}
+
+.labelC {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	text-decoration: underline;
+}
+button {
+	margin-top: 20px;
+}
