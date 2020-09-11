@@ -1,6 +1,7 @@
 p5.disableFriendlyErrors = true; // disables FES
 let stag;
 let saveB;
+let clearB;
 var bs = 10;
 var offset = 70;
 var sliderx, slidery, thickslider, rslider, rsli, gsli, bsli, brsli, bgsli, bbsli;
@@ -99,6 +100,11 @@ labelC = createElement('p', 'Background Colour');
 	saveB = createButton('Save Image');
 	saveB.parent('sketch-holder');
 	saveB.mousePressed(saveImage);
+	
+	//Clear Button
+	clearB = createButton('Clear Image');
+	clearB.parent('sketch-holder');
+	clearB.mousePressed(eraseB);
 }
 
 function orico(spacingx, spacingy, thick, r, pr, pg, pb) {
@@ -126,6 +132,17 @@ function orico(spacingx, spacingy, thick, r, pr, pg, pb) {
 			
 			pop();
 		}
+	}
+}
+
+function eraseB() {
+//console.log('up');
+
+	for (var i = 0; i < arr.length; i++) {
+				for (var j = 0; j < arr[i].length; j++) {
+//					console.log('hello');
+					arr[i][j].fill = 'white';
+				}
 	}
 }
 
